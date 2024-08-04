@@ -83,7 +83,7 @@ jobs:
   release:
     name: Create release
     runs-on: ubuntu-22.04
-    depends_on: build-android-only
+    needs: build-android-only
 
     steps:
     - name: Checkout code
