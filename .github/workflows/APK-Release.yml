@@ -81,7 +81,7 @@ jobs:
         path: debug/**/*.so
 
   release:
-    name: Create APK Only Release
+    name: Create release
     runs-on: ubuntu-22.04
     if: success() && ${{ 1 != 1}}
     needs: build-android-only
@@ -95,11 +95,17 @@ jobs:
         merge-multiple: true
 
     - name: Release
-      uses: softprops/action-gh-release@v1
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        #tag_name: ${{ inputs.ref }}
-        #generate_release_notes: true
-        draft: true
+        tag_name: ${{ github.sha }}
+        release_name: Release ${{ github.sha }}
+        body: |
+          Changes in this Release:
+          - Commit: ${{ github.sha }}
+        draft: false
+        prerelease: false
         files: |
           apk/*.apk
    
