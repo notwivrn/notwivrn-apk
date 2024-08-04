@@ -83,7 +83,8 @@ jobs:
   release:
     name: Create release
     runs-on: ubuntu-22.04
-    if: ${{ vars.APK_ONLY != '' }}
+    depends_on: build-android-only
+    if: ${{ vars.APK_ONLY != '' }} && success()
 
     steps:
     - name: Checkout code
