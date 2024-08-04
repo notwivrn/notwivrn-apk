@@ -4,13 +4,10 @@ on:
   push:
     branches: [ "master" ]
 
-env:
-  APK_ONLY: ${{ vars.APK_ONLY_BUILD || '' }}
-
 jobs:
   sync_fork_downstream:
     runs-on: ubuntu-latest
-    if: ${{ env.APK_ONLY == '' }}
+    if: ${{ vars.APK_ONLY != '' }}
     steps:
       - name: Sync fork downstream
         run: |
