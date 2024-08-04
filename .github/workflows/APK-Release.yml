@@ -83,7 +83,7 @@ jobs:
   release:
     name: Create release
     runs-on: ubuntu-22.04
-    if: success() && ${{ vars.APK_ONLY != '' }}
+    if: ${{ vars.APK_ONLY != '' }}
 
     steps:
     - name: Checkout code
