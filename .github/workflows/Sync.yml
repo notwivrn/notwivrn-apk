@@ -5,7 +5,7 @@ on:
     branches: [ "master" ]
 
 env:
-  APK_ONLY: ${{ env.APK_ONLY_BUILD }}
+  APK_ONLY: ${{ vars.APK_ONLY_BUILD }}
 
 jobs:
   sync_fork_downstream:
