@@ -7,7 +7,7 @@ on:
 jobs:
   sync_fork_downstream:
     runs-on: ubuntu-latest
-    if: ${{ vars.APK_ONLY != '' }}
+    if: ${{ vars.APK_ONLY == '' }}
     steps:
       - name: Sync fork downstream
         run: |
