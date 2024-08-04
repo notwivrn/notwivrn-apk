@@ -2,13 +2,13 @@ name: Build and Release APK
 
 on:
   push:
-    branches: [ "apk-release" ]
+    branches: [ "master" ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: RelWithDebInfo
 
-jobs:
+jobs:    
   build-android:
     name: Android
     runs-on: ubuntu-22.04
@@ -19,6 +19,13 @@ jobs:
         buildtype: ['Release', 'Debug', 'DebugWithValidationLayer']
 
     steps:
+    - name: Check if we are on downstream
+      run: |
+        if [ -z "${{ env.APK_RELEASE }}" ]; then
+          echo "APK_RELEASE is not set. Exiting workflow."
+          exit 0
+        fi
+
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
