@@ -10,6 +10,17 @@ env:
   BUILD_TYPE: Release
 
 jobs:
+  check-downstream:
+    name: Check if we are on downstream
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Check if we are on downstream
+      run: |
+        if [ -z "${{ env.APK_RELEASE }}" ]; then
+          echo "APK_RELEASE is not set. Exiting workflow."
+          exit 0
+        fi
+
   build-server:
     name: Linux server
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.

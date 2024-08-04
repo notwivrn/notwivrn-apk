@@ -9,6 +9,18 @@ env:
   BUILD_TYPE: RelWithDebInfo
 
 jobs:    
+
+  check-downstream:
+    name: Check if we are on downstream
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Check if we are on downstream
+      run: |
+        if [ -z "${{ env.APK_RELEASE }}" ]; then
+          echo "APK_RELEASE is not set. Exiting workflow."
+          exit 0
+        fi
+
   build-android:
     name: Android
     runs-on: ubuntu-22.04
@@ -19,13 +31,6 @@ jobs:
         buildtype: ['Release', 'Debug', 'DebugWithValidationLayer']
 
     steps:
-    - name: Check if we are on downstream
-      run: |
-        if [ -z "${{ env.APK_RELEASE }}" ]; then
-          echo "APK_RELEASE is not set. Exiting workflow."
-          exit 0
-        fi
-
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
