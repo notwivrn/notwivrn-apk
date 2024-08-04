@@ -1,12 +1,16 @@
-name: Sync 3
+name: Sync Fork Downstream
 
 on:
   push:
     branches: [ "master" ]
 
+env:
+  APK_ONLY: ${{ env.APK_ONLY }}
+
 jobs:
   sync_fork_downstream:
     runs-on: ubuntu-latest
+    if: ${{ env.APK_ONLY == '' }}
     steps:
       - name: Sync fork downstream
         run: |

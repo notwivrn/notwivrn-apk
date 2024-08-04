@@ -17,7 +17,7 @@ jobs:
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-22.04
-    if: ${{ env.APK_ONLY != '' }}
+    if: ${{ env.APK_ONLY == '' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -78,7 +78,7 @@ jobs:
   build-test-client:
     name: Linux client
     runs-on: ubuntu-22.04
-    if: ${{ env.APK_ONLY != '' }}
+    if: ${{ env.APK_ONLY == '' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -112,7 +112,7 @@ jobs:
   build-dissector:
     name: Wireshark dissector
     runs-on: ubuntu-22.04
-    if: ${{ env.APK_ONLY != '' }}
+    if: ${{ env.APK_ONLY == '' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -147,7 +147,7 @@ jobs:
   build-android:
     name: Android
     runs-on: ubuntu-22.04
-    if: ${{ env.APK_ONLY != '' }}
+    if: ${{ env.APK_ONLY == '' }}
 
     strategy:
       matrix:
@@ -219,7 +219,7 @@ jobs:
     name: Create release
     runs-on: ubuntu-22.04
     if: success() && startsWith(github.ref, 'refs/tags/')
-    if: ${{ env.APK_ONLY != '' }}
+    if: ${{ env.APK_ONLY == '' }}
 
     steps:
     - name: Download artifacts
