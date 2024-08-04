@@ -97,7 +97,6 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ inputs.ref }}
         generate_release_notes: true
         draft: true
         files: |
