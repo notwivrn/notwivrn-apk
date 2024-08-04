@@ -1,0 +1,17 @@
+name: Sync Fork Downstream
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  sync_fork_downstream:
+    runs-on: ubuntu-latest
+    if: ${{ vars.APK_ONLY == '' }}
+    steps:
+      - name: Sync fork downstream
+        run: |
+          curl -X POST -H "Accept: application/vnd.github.v3+json" \
+               -H "Authorization: token ${{ secrets.DOWNSTREAM_GITHUB_TOKEN }}" \
+               https://api.github.com/repos/notwivrn/notwivrn-apk/merge-upstream \
+               -d '{"branch":"master"}'
