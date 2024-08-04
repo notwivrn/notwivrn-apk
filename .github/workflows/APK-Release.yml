@@ -24,6 +24,7 @@ jobs:
   build-android:
     name: Android
     runs-on: ubuntu-22.04
+    needs: check-downstream
 
     strategy:
       matrix:
