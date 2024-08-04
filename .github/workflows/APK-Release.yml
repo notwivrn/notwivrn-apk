@@ -87,14 +87,14 @@ jobs:
 
     steps:
     - name: Checkout code
-        uses: actions/checkout@v2
+      uses: actions/checkout@v2
 
     - name: Create and push tag
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git tag -a "build-${{ github.sha }}" ${{ github.sha }} -m "Add build-${{ github.sha }}"
-          git push origin "build-${{ github.sha }}"
+       run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git tag -a "build-${{ github.sha }}" ${{ github.sha }} -m "Add build-${{ github.sha }}"
+        git push origin "build-${{ github.sha }}"
 
     - name: Download artifacts
       uses: actions/download-artifact@v4
