@@ -1,14 +1,14 @@
-name: Sync 2
+name: Sync 3
 
 on:
   push:
     branches: [ "master" ]
 
 jobs:
-  sync_with_downstream:
+  sync_fork_downstream:
     runs-on: ubuntu-latest
     steps:
-      - name: Sync fork with downstream
+      - name: Sync fork downstream
         run: |
           curl -X POST -H "Accept: application/vnd.github.v3+json" \
                -H "Authorization: token ${{ secrets.DOWNSTREAM_GITHUB_TOKEN }}" \
