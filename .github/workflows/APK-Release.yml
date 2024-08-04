@@ -109,7 +109,7 @@ jobs:
         token: ${{ secrets.DOWNSTREAM_GITHUB_TOKEN }}
         tag_name: ${{ github.sha }}
         generate_release_notes: true
-        draft: true
+        draft: false
         files: |
           apk/*.apk
    
