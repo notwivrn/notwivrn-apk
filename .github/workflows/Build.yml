@@ -8,26 +8,16 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  APK_ONLY: ${{ env.APK_ONLY }}
 
 jobs:
-  check-downstream:
-    name: Check if we are on downstream
-    runs-on: ubuntu-22.04
-    steps:
-    - name: Check if we are on downstream
-      run: |
-        if [ -z "${{ env.APK_RELEASE }}" ]; then
-          echo "APK_RELEASE is not set. Exiting workflow."
-          exit 0
-        fi
-
   build-server:
     name: Linux server
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-22.04
-    needs: check-downstream
+    if: ${{ env.APK_ONLY != '' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -88,7 +78,7 @@ jobs:
   build-test-client:
     name: Linux client
     runs-on: ubuntu-22.04
-    needs: check-downstream
+    if: ${{ env.APK_ONLY != '' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -122,7 +112,7 @@ jobs:
   build-dissector:
     name: Wireshark dissector
     runs-on: ubuntu-22.04
-    needs: check-downstream
+    if: ${{ env.APK_ONLY != '' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -157,7 +147,7 @@ jobs:
   build-android:
     name: Android
     runs-on: ubuntu-22.04
-    needs: check-downstream
+    if: ${{ env.APK_ONLY != '' }}
 
     strategy:
       matrix:
@@ -229,7 +219,7 @@ jobs:
     name: Create release
     runs-on: ubuntu-22.04
     if: success() && startsWith(github.ref, 'refs/tags/')
-    needs: build-android
+    if: ${{ env.APK_ONLY != '' }}
 
     steps:
     - name: Download artifacts

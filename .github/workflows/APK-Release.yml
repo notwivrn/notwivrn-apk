@@ -7,24 +7,13 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: RelWithDebInfo
+  APK_ONLY: ${{ env.APK_ONLY }}
 
-jobs:    
-
-  check-downstream:
-    name: Check if we are on downstream
-    runs-on: ubuntu-22.04
-    steps:
-    - name: Check if we are on downstream
-      run: |
-        if [ -z "${{ env.APK_RELEASE }}" ]; then
-          echo "APK_RELEASE is not set. Exiting workflow."
-          exit 0
-        fi
-
+jobs:
   build-android:
     name: Android
     runs-on: ubuntu-22.04
-    needs: check-downstream
+    if: ${{ env.APK_ONLY != '' }}
 
     strategy:
       matrix:
@@ -95,7 +84,7 @@ jobs:
   release:
     name: Create release
     runs-on: ubuntu-22.04
-    if: success()
+    if: success() && if: ${{ env.APK_ONLY != '' }}
     needs: build-android
 
     steps:
