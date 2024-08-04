@@ -84,9 +84,18 @@ jobs:
     name: Create release
     runs-on: ubuntu-22.04
     if: success()
-    needs: build-android-only
 
     steps:
+    - name: Checkout code
+        uses: actions/checkout@v2
+
+    - name: Create and push tag
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git tag -a "build-${{ github.sha }}" ${{ github.sha }} -m "Add build-${{ github.sha }}"
+          git push origin "build-${{ github.sha }}"
+
     - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
