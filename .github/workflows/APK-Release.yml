@@ -7,13 +7,12 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: RelWithDebInfo
-  APK_ONLY: ${{ env.APK_ONLY }}
 
 jobs:
   build-android:
     name: Android
     runs-on: ubuntu-22.04
-    if: ${{ env.APK_ONLY != '' }}
+    if: ${{ vars.APK_ONLY != '' }}
 
     strategy:
       matrix:
@@ -84,7 +83,7 @@ jobs:
   release:
     name: Create release
     runs-on: ubuntu-22.04
-    if: success() && if: ${{ env.APK_ONLY != '' }}
+    if: success() && ${{ vars.APK_ONLY != '' }}
     needs: build-android
 
     steps:
