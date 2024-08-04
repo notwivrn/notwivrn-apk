@@ -1,4 +1,4 @@
-name: Build and Release APK
+name: Release APK Only
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
       run: |
         if [ -z "${{ env.APK_RELEASE }}" ]; then
           echo "APK_RELEASE is not set. Exiting workflow."
-          exit 0
+          exit 1
         fi
 
     - uses: actions/checkout@v4
